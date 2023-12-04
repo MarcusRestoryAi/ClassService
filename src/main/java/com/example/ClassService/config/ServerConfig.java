@@ -54,7 +54,8 @@ public class ServerConfig {
                     //auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     //auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                     auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/books/**").authenticated();
+                    auth.requestMatchers("/books/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/books/book/**").hasRole("ADMIN");
                     auth.anyRequest().authenticated();
                 });
 

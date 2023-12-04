@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,8 +22,18 @@ public class User implements UserDetails {
     @Column(name = "users_id")
     private Long id;
 
+    @Column(unique = true)
     private String username;
     private String password;
+
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(
+            name="user_role_junction",
+            joinColumns = {@JoinColumn(name="users_id")},
+            inverseJoinColumns = {@JoinColumn(name="roles_id")}
+    )
+    private Set<Role> authorities;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

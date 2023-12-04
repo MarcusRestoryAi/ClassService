@@ -1,7 +1,9 @@
 package com.example.ClassService.services;
 
 import com.example.ClassService.models.LoginResponse;
+import com.example.ClassService.models.Role;
 import com.example.ClassService.models.User;
+import com.example.ClassService.repository.RoleRepository;
 import com.example.ClassService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,19 +25,18 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
+    private final RoleRepository roleRepository;
 
     public ResponseEntity<User> register(String username, String password) {
         String encryptedPassword = passwordEncoder.encode(password);
-/*
+
         Role userRole = roleRepository.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
 
         authorities.add(userRole);
 
- */
-
-        return ResponseEntity.ok(userRepository.save( new User(0L, username, encryptedPassword) ));
+        return ResponseEntity.ok(userRepository.save( new User(0L, username, encryptedPassword, authorities) ));
     }
 
     public ResponseEntity<LoginResponse> login (String username, String password) {
