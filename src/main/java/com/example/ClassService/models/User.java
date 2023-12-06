@@ -34,10 +34,10 @@ public class User implements UserDetails {
     )
     private Set<Role> authorities;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        // TODO Auto-generated method stub
+        return authorities;
     }
 
     @Override
